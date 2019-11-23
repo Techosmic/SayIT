@@ -37,26 +37,11 @@ class AdventureGameState extends State<AdventureGame> {
   String _currentLocale = 'en_US';
   Language selectedLang = languages[1];
 
-  @override
-  Widget build(BuildContext context) {
-    activateSpeechRecognizer();
-    maxScore = widget.selectedLevel.words.length;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Mode aventure'),
-        ),
-        body: Center(
-          child: Text('Niveau ${widget.selectedLevel.levelNumber} : ${widget.selectedLevel.difficulty} : $transcription'),
-          ),
-        bottomSheet: RaisedButton(
-            onPressed: () {captureSpeech();},
-            child: Text(transcription),
-          ),
-      );
-  }
   void captureSpeech() {
     start();
+    score++;
   }
+
   void activateSpeechRecognizer() {
     print('_MyAppState.activateSpeechRecognizer... ');
     _speech = new SpeechRecognition();
@@ -69,6 +54,7 @@ class AdventureGameState extends State<AdventureGame> {
         .activate()
         .then((res) => _speechRecognitionAvailable = res);
   }
+
   void start() => _speech
     .listen(locale: _currentLocale)
     .then((result) => print('_MyAppState.start => result $result'));
@@ -76,21 +62,43 @@ class AdventureGameState extends State<AdventureGame> {
   void cancel() =>
     _speech.cancel().then((result) => _isListening = result);
 
-  void stop() => _speech.stop().then((result)
-    => _isListening = result);
+  void stop() => _speech.stop().then((result){
+    setState(() => _isListening = result);
+  });
 
-  void onSpeechAvailability(bool result) => _speechRecognitionAvailable = result;
+  void onSpeechAvailability(bool result) =>
+    setState(() => _speechRecognitionAvailable = result);
 
   void onCurrentLocale(String locale) {
     print('_MyAppState.onCurrentLocale... $locale');
-    selectedLang = languages.firstWhere((l) => l.code == locale);
+    setState(
+        () =>
+    selectedLang = languages.firstWhere((l) => l.code == locale));
   }
 
-  void onRecognitionStarted() => _isListening = true;
+  void onRecognitionStarted() => setState(() => _isListening = true);
 
-  void onRecognitionResult(String text) => transcription = text;
+  void onRecognitionResult(String text) => setState(() => transcription = text);
 
-  void onRecognitionComplete() =>  _isListening = false;
+  void onRecognitionComplete() => setState(() => _isListening = false);
 
   void errorHandler() => activateSpeechRecognizer();
+
+  @override
+  Widget build(BuildContext context) {
+    activateSpeechRecognizer();
+    maxScore = widget.selectedLevel.words.length;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Mode aventure'),
+        ),
+        body: Center(
+          child: Text('Niveau ${widget.selectedLevel.levelNumber} : ${widget.selectedLevel.difficulty} : $transcription : $score'),
+          ),
+        bottomSheet: RaisedButton(
+            onPressed: () {captureSpeech();},
+            child: Text(transcription),
+          ),
+      );
+  }
 }
