@@ -307,3 +307,8 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/dart,macos,flutter,windows,android,intellij
+/sayit/.vs
+/API/SayIT_API/.vs/SayIT_API
+/API/SayIT_API/SayIT_API/obj
+/API/SayIT_API/SayIT_API/Properties/PublishProfiles
+/API/SayIT_API/SayIT_API/Properties
