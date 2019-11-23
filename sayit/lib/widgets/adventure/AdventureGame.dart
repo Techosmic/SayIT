@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sayit/model/Level.dart';
 import 'package:speech_recognition/speech_recognition.dart';
+
 const languages = const [
   const Language('Francais', 'fr_FR'),
   const Language('English', 'en_US'),
@@ -8,7 +9,6 @@ const languages = const [
   const Language('Italiano', 'it_IT'),
   const Language('Español', 'es_ES'),
 ];
-import 'package:sayit/style.dart';
 
 class Language {
   final String name;
@@ -16,26 +16,11 @@ class Language {
 
   const Language(this.name, this.code);
 }
-class AdventureGame extends StatelessWidget {
-  SpeechRecognition _speech;
+class AdventureGame extends StatefulWidget {
   final Level selectedLevel;
 
-  bool _speechRecognitionAvailable = false;
-  bool _isListening = false;
+  AdventureGame({this.selectedLevel});
 
-  String transcription = '';
-
-  String _currentLocale = 'en_US';
-  Language selectedLang = languages[1];
-
-  final Level selectedLevel;
-  AdventureGame({this.selectedLevel}){
-    activateSpeechRecognizer();
-  }
-  void captureSpeech() {
-    start();
-  }
-  
   @override
   AdventureGameState createState() => AdventureGameState();
 }
@@ -43,22 +28,34 @@ class AdventureGame extends StatelessWidget {
 class AdventureGameState extends State<AdventureGame> {
   int score = 0;
   int maxScore;
+  bool _speechRecognitionAvailable = false;
+  bool _isListening = false;
+  SpeechRecognition _speech;
+
+  String transcription = '';
+
+  String _currentLocale = 'en_US';
+  Language selectedLang = languages[1];
 
   @override
   Widget build(BuildContext context) {
+    activateSpeechRecognizer();
     maxScore = widget.selectedLevel.words.length;
     return Scaffold(
       appBar: AppBar(
         title: Text('Mode aventure'),
         ),
         body: Center(
-          child: Text('Niveau ${selectedLevel.levelNumber} : ${selectedLevel.difficulty} : $transcription'),
+          child: Text('Niveau ${widget.selectedLevel.levelNumber} : ${widget.selectedLevel.difficulty} : $transcription'),
           ),
         bottomSheet: RaisedButton(
             onPressed: () {captureSpeech();},
             child: Text(transcription),
           ),
       );
+  }
+  void captureSpeech() {
+    start();
   }
   void activateSpeechRecognizer() {
     print('_MyAppState.activateSpeechRecognizer... ');
