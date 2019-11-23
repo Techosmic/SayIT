@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SayIT_API", "SayIT_API\SayIT_API.csproj", "{638C5FCE-9DAC-4EFA-8852-1C428B96886F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{638C5FCE-9DAC-4EFA-8852-1C428B96886F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{638C5FCE-9DAC-4EFA-8852-1C428B96886F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{638C5FCE-9DAC-4EFA-8852-1C428B96886F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{638C5FCE-9DAC-4EFA-8852-1C428B96886F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C9EC5136-5C08-486E-90C8-08C7FC827556}
+	EndGlobalSection
+EndGlobal

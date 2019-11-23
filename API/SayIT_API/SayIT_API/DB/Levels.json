@@ -1,0 +1,34 @@
+[
+  {
+    "levelNumber": 1,
+    "words": [
+      "cat",
+      "dog"
+    ],
+    "unlocked": true
+  },
+  {
+    "levelNumber": 2,
+    "words": [
+      "How",
+      "Why"
+    ],
+    "unlocked": false
+  },
+  {
+    "levelNumber": 3,
+    "words": [
+      "There",
+      "Their"
+    ],
+    "unlocked": false
+  },
+  {
+    "levelNumber": 4,
+    "words": [
+      "Through",
+      "Thought"
+    ],
+    "unlocked": false
+  }
+]
