@@ -3,6 +3,8 @@ import 'package:sayit/api/LevelsDAO.dart';
 import 'package:sayit/model/Level.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 
+import 'DifficultySelect.dart';
+
 const languages = const [
   const Language('Francais', 'fr_FR'),
   const Language('English', 'en_US'),
@@ -37,7 +39,7 @@ class AdventureGameState extends State<AdventureGame> {
   String winorlose = "";
   String _currentLocale = 'en_US';
   Language selectedLang = languages[1];
-
+  List<Level> levels;
   void captureSpeech() {
     if(essaisRestant > 0) {
       start();
@@ -98,7 +100,12 @@ class AdventureGameState extends State<AdventureGame> {
     }
   }
   void errorHandler() => activateSpeechRecognizer();
-
+  void initState() {
+    getLevels();
+  }
+  void getLevels() async {
+    levels = await LevelsDAO.getLevelsListAsync();
+  }
   @override
   Widget build(BuildContext context) {
     activateSpeechRecognizer();
@@ -113,14 +120,16 @@ class AdventureGameState extends State<AdventureGame> {
                 Text('Essais restants: $essaisRestant     Score: $score/$maxScore'),
                 Text(widget.selectedLevel.words[score]),
                 RaisedButton(
-                  onPressed: () {_isListening ? null : captureSpeech();},
-                  color: _isListening ? Color.fromRGBO(255, 0, 0, 100) : null,
-                  child: Text("enregistre ta prononciation"),
+                  onPressed: () {_isListening ? 
+                  null : winorlose.contains("win") ? 
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DifficultySelect(selectedLevel: levels[widget.selectedLevel.levelNumber] )))
+                  : captureSpeech();},
+                  color: _isListening ? Color.fromRGBO(255, 0, 0, 100) : winorlose.contains("win") ? Color.fromRGBO(0, 255, 0, 100) : null,
+                  child: Text(winorlose.contains("win")? "Aller au niveau suivant" :"enregistre ta prononciation"),
                 ),
                 Text("$winorlose"),
-                  RaisedButton(
-                    onPressed: () { }
-                  )
               ],
               )
           ),
