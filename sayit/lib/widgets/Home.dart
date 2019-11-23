@@ -27,14 +27,14 @@ class Home extends StatelessWidget {
                   );
                   },
                   child: Text(
-                      'Adventure game',
+                      'Mode aventure',
                       style: Body1Style
                   ),
                 )
             ),
             Container(
               padding: const EdgeInsets.all(8),
-              child: const Text('Input game'),
+              child: const Text('Mode personnalisé'),
               color: Colors.teal[200],
             ),
           ],

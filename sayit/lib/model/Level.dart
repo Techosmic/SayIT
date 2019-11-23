@@ -1,6 +1,6 @@
 class Level {
     int levelNumber;
-    int difficulty;
+    String difficulty;
 
     Level({
         this.levelNumber,

@@ -16,7 +16,7 @@ class LevelSelectState extends State<LevelSelect> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select a level'),
+        title: Text('Choisis un niveau'),
       ),
       body: GridView.builder(
         itemCount: unlockedLevels.length,
@@ -31,7 +31,7 @@ class LevelSelectState extends State<LevelSelect> {
                     );
                   },
                   child: Text(
-                      'Level ${unlockedLevels[index].levelNumber}',
+                      'Niveau ${unlockedLevels[index].levelNumber}',
                       style: Body1Style
                   ),
           );
