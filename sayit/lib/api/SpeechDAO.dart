@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 
-const String url = "https://sayitfunct.azurewebsites.net/api/FunctionGCP?code=yoEF7zHuThPdxN3plNi3o5ulUBXq8jSWFmp2rtwQLHBz1JkbRU2WCA==";
+const String url = "https://937f8a11.ngrok.io/api/FunctionGCP?code=yoEF7zHuThPdxN3plNi3o5ulUBXq8jSWFmp2rtwQLHBz1JkbRU2WCA==";
 
 class SpeechDAO {
   static Future fetchAudioUrlAsync(String input) async {

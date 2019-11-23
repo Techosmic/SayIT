@@ -14,11 +14,13 @@ namespace TextToSpeech
     public static class FunctionGCP
     {
         private static readonly HttpClient _httpClient = new HttpClient();
+        private static ILogger logger;
         [FunctionName("FunctionGCP")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
+            logger = log;
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             var text = await new StreamReader(req.Body).ReadToEndAsync();
@@ -43,11 +45,12 @@ namespace TextToSpeech
             HttpContent httpContent = new ByteArrayContent(binaryData);
             _httpClient.DefaultRequestHeaders.Add("x-ms-blob-type", "BlockBlob");
             //_httpClient.DefaultRequestHeaders.Add("Content-Type", "MP3");
-            _httpClient.DefaultRequestHeaders.Add("x-ms-date", DateTime.UtcNow.ToShortTimeString());
+            _httpClient.DefaultRequestHeaders.Add("x-ms-date", DateTime.UtcNow.ToString("U"));
             var url = "https://sayitaudio.blob.core.windows.net/audio/" + title +
                       ".mp3?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-11-24T00:06:10Z&st=2019-11-23T16:06:10Z&sip=1.1.1.1-255.255.255.255&spr=https&sig=S%2FxQzYZfOFF8iWffiYNvPFepgCt0QGURGC2DPoSVmxA%3D";
             var response = await _httpClient.PutAsync(url, httpContent);
             var resultString = await response.Content.ReadAsStringAsync();
+            logger.LogInformation(resultString);
             return url;
         }
     }
