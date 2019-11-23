@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sayit/data/UnlockedLevelsDao.dart';
+
+import '../../style.dart';
+import 'DifficultySelect.dart';
 
 class LevelSelect extends StatefulWidget {
   @override
@@ -6,6 +10,7 @@ class LevelSelect extends StatefulWidget {
 }
 
 class LevelSelectState extends State<LevelSelect> {
+  final unlockedLevels = UnlockedLevelsDao.getLevelList().asMap();
 
   @override
   Widget build(BuildContext context) {
@@ -13,34 +18,24 @@ class LevelSelectState extends State<LevelSelect> {
       appBar: AppBar(
         title: Text('Select a level'),
       ),
-      body: GridView.count(
-        primary: false,
-        padding: const EdgeInsets.all(20),
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        crossAxisCount: 3,
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: const Text('Level 1'),
-            color: Colors.teal[100],
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: const Text('Level 2'),
-            color: Colors.teal[200],
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: const Text('Level 3'),
-            color: Colors.teal[300],
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: const Text('Level 4'),
-            color: Colors.teal[400],
-          ),
-        ],
+      body: GridView.builder(
+        itemCount: unlockedLevels.length,
+        gridDelegate:
+            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+        itemBuilder: (BuildContext context, int index) {
+          return RaisedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DifficultySelect(selectedLevel: unlockedLevels[index])),
+                    );
+                  },
+                  child: Text(
+                      'Level ${unlockedLevels[index].levelNumber}',
+                      style: Body1Style
+                  ),
+          );
+        },
       )
     );
   }
