@@ -10,15 +10,15 @@ class LevelSelect extends StatefulWidget {
   LevelSelectState createState() => LevelSelectState();
 }
 
-class LevelSelectState extends State<LevelSelect> {
-  List<Level> levels = List<Level>();
+class LevelSelectState extends State < LevelSelect > {
+  List < Level > levels = List < Level > ();
 
   @override
   void initState() {
     LevelsDAO.getLevelsListAsync().then((data) =>
-        setState(() {
-          levels = data;
-        }));
+      setState(() {
+        levels = data;
+      }));
     super.initState();
   }
 
@@ -30,20 +30,24 @@ class LevelSelectState extends State<LevelSelect> {
       ),
       body: GridView.builder(
         itemCount: levels.length,
-        gridDelegate:
-            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+
+        padding: EdgeInsets.all(25.0),
+        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisSpacing: 15, crossAxisSpacing: 10),
         itemBuilder: (BuildContext context, int index) {
           return RaisedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DifficultySelect(selectedLevel: levels[index])),
-                    );
-                  },
-                  child: Text(
-                      'Niveau ${levels[index].levelNumber}',
-                      style: Body1Style
-                  ),
+            shape: CircleBorder(side: BorderSide(color: Colors.teal, width: 2)),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DifficultySelect(selectedLevel: levels[index])),
+              );
+            },
+            child: Center(
+              child: Text(
+                'Niveau ${levels[index].levelNumber}',
+                style: ButtonStyle,
+              ),
+            )
           );
         },
       )

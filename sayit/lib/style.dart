@@ -9,3 +9,8 @@ const Body1Style = TextStyle(
   fontSize: 26.0,
   color: Colors.black,
 );
+
+const ButtonStyle = TextStyle(
+  fontSize: 20.0,
+  color: Colors.black
+);

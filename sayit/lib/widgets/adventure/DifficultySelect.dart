@@ -8,7 +8,9 @@ import 'AdventureGame.dart';
 class DifficultySelect extends StatelessWidget {
   final Level selectedLevel;
 
-  DifficultySelect({this.selectedLevel});
+  DifficultySelect({
+    this.selectedLevel
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,21 +20,26 @@ class DifficultySelect extends StatelessWidget {
       ),
       body: GridView.builder(
         itemCount: difficulty.length,
+        padding: EdgeInsets.all(125),
         gridDelegate:
-            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
+        new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, mainAxisSpacing: 25, crossAxisSpacing: 10, childAspectRatio: 1.5),
         itemBuilder: (BuildContext context, int index) {
           return RaisedButton(
-                  onPressed: () {
-                    selectedLevel.difficulty = difficulty[index].toLowerCase();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AdventureGame(selectedLevel: selectedLevel)),
-                    );
-                  },
-                  child: Text(
-                      '${difficulty[index]}',
-                      style: Body1Style
-                  ),
+            shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(18.0),
+              side: BorderSide(color: Colors.teal, width: 2)
+            ),
+            onPressed: () {
+              selectedLevel.difficulty = difficulty[index].toLowerCase();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AdventureGame(selectedLevel: selectedLevel)),
+              );
+            },
+            child: Text(
+              '${difficulty[index]}',
+              style: Body1Style
+            ),
           );
         },
       )

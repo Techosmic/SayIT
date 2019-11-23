@@ -12,41 +12,43 @@ class Home extends StatelessWidget {
       ),
       body: Center(
         child: GridView.count(
-          primary: false,
-          padding: const EdgeInsets.all(20),
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
           crossAxisCount: 1,
-          children: <Widget>[
-            Container(
-                padding: const EdgeInsets.all(8),
-                child: RaisedButton(
-                  onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LevelSelect()),
-                  );
-                  },
-                  child: Text(
-                      'Mode aventure',
-                      style: Body1Style
-                  ),
-                )
+          mainAxisSpacing: 15,
+          childAspectRatio: 2.5,
+          crossAxisSpacing: 25,
+          padding: EdgeInsets.all(75),
+          children: < Widget > [
+            RaisedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LevelSelect()),
+                );
+              },
+              shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(18.0),
+                side: BorderSide(color: Colors.teal, width: 2),
+              ),
+              child: Text(
+                'Aventure',
+                style: Body1Style
+              ),
             ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              child: RaisedButton(
-                  onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => PlayerWidget()),
-                  );
-                  },
-                  child: Text(
-                      'Audio player test',
-                      style: Body1Style
-                  ),
-                )
+            RaisedButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(18.0),
+                side: BorderSide(color: Colors.teal, width: 2),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PlayerWidget()),
+                );
+              },
+              child: Text(
+                'Entrainement',
+                style: Body1Style
+              ),
             ),
           ],
         ),
