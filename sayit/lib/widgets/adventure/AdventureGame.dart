@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sayit/api/LevelsDAO.dart';
 import 'package:sayit/model/Level.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 
@@ -26,24 +27,30 @@ class AdventureGame extends StatefulWidget {
 }
 
 class AdventureGameState extends State<AdventureGame> {
+  int essaisRestant = 5;
   int score = 0;
-  int maxScore;
+  int maxScore = 10;
   bool _speechRecognitionAvailable = false;
   bool _isListening = false;
   SpeechRecognition _speech;
-
   String transcription = '';
-
+  String winorlose = "";
   String _currentLocale = 'en_US';
   Language selectedLang = languages[1];
 
   void captureSpeech() {
-    start();
-    score++;
+    if(essaisRestant > 0) {
+      start();
+      essaisRestant--;
+      if(essaisRestant == 0){
+        winorlose = "You lose!";
+      }
+    } else {
+      winorlose = "You lose!";
+    }
   }
 
   void activateSpeechRecognizer() {
-    print('_MyAppState.activateSpeechRecognizer... ');
     _speech = new SpeechRecognition();
     _speech.setAvailabilityHandler(onSpeechAvailability);
     _speech.setCurrentLocaleHandler(onCurrentLocale);
@@ -54,7 +61,6 @@ class AdventureGameState extends State<AdventureGame> {
         .activate()
         .then((res) => _speechRecognitionAvailable = res);
   }
-
   void start() => _speech
     .listen(locale: _currentLocale)
     .then((result) => print('_MyAppState.start => result $result'));
@@ -70,7 +76,6 @@ class AdventureGameState extends State<AdventureGame> {
     setState(() => _speechRecognitionAvailable = result);
 
   void onCurrentLocale(String locale) {
-    print('_MyAppState.onCurrentLocale... $locale');
     setState(
         () =>
     selectedLang = languages.firstWhere((l) => l.code == locale));
@@ -80,8 +85,18 @@ class AdventureGameState extends State<AdventureGame> {
 
   void onRecognitionResult(String text) => setState(() => transcription = text);
 
-  void onRecognitionComplete() => setState(() => _isListening = false);
-
+  void onRecognitionComplete() => setState(() => onCompleteRecognition());
+  void onCompleteRecognition() {
+    _isListening = false;
+    var word = widget.selectedLevel.words[score];
+    if(transcription.contains(word)) {
+      score++;
+    }
+    if(score >= widget.selectedLevel.words.length) {
+      score = 0;
+      winorlose = "You win!";
+    }
+  }
   void errorHandler() => activateSpeechRecognizer();
 
   @override
@@ -93,11 +108,21 @@ class AdventureGameState extends State<AdventureGame> {
         title: Text('Mode aventure'),
         ),
         body: Center(
-          child: Text('Niveau ${widget.selectedLevel.levelNumber} : ${widget.selectedLevel.difficulty} : $transcription : $score'),
-          ),
-        bottomSheet: RaisedButton(
-            onPressed: () {captureSpeech();},
-            child: Text(transcription),
+          child: Column(
+              children: [
+                Text('Essais restants: $essaisRestant     Score: $score/$maxScore'),
+                Text(widget.selectedLevel.words[score]),
+                RaisedButton(
+                  onPressed: () {_isListening ? null : captureSpeech();},
+                  color: _isListening ? Color.fromRGBO(255, 0, 0, 100) : null,
+                  child: Text("enregistre ta prononciation"),
+                ),
+                Text("$winorlose"),
+                  RaisedButton(
+                    onPressed: () { }
+                  )
+              ],
+              )
           ),
       );
   }
