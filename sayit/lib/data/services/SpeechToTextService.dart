@@ -22,8 +22,8 @@ class SpeechToTextService {
 
   String transcription = '';
 
-  //String _currentLocale = 'en_US';
-  Language selectedLang = languages.first;
+  String _currentLocale = 'en_US';
+  Language selectedLang = languages[1];
   main(List<String> args) {
     activateSpeechRecognizer();
   }
@@ -40,7 +40,7 @@ class SpeechToTextService {
         .then((res) => _speechRecognitionAvailable = res);
   }
   void start() => _speech
-    .listen(locale: selectedLang.code)
+    .listen(locale: _currentLocale)
     .then((result) => print('_MyAppState.start => result $result'));
 
   void cancel() =>
