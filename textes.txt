@@ -1,0 +1,51 @@
+Accueil : mode sélection :
+
+Sélectionne le mode aventure pour apprendre de nouveaux sorts et  découvrir les secrets de l'école. 
+
+Ou bien choisis le mode entraînement pour apprendre tes propres sorts !  
+
+-----------------------------------
+
+Difficulté :
+Facile :
+
+1 seul mot à l'écran à la fois, l'assistant  répète le mot à chaque mauvaise prononciation
+
+Moyen :
+
+1 seul mot à l'écran à la fois, l'assistant ne prononce le mot que lorsque celui-ci apparaît 
+
+Difficile :
+
+Les mots s'enchaînent à l'écran à chaque erreur, l'assistant ne prononce le mot que lorsque celui-ci apparaît
+
+------------------------------------
+
+Accueil Histoire : 
+
+Aujourd'hui, nous allons apprendre à préparer la potion d'invisibilité.
+
+Pour commencer, prononce le nom de la potion à voix haute. Ensuite, invoque les différents ingrédients pour les ajouter dans ton chaudron. 
+
+Attention, à ta prononciation, si tu te trompe de formule, ta potion tournera en poison !
+
+------------------------------------
+
+
+Défaite :
+
+Tu as ajouté un mauvais ingrédient, tu as encore du temps avant la fin du cours, tu veux recommencer ?
+
+-------------------------------------
+
+Victoire :
+
+Bravo !  Ta potion est réussie ! N'hésite pas à retenter cette recette pour la perfectionner. 
+
+C'est l'heure de ton prochain cours ! 
+
+
+ 
+
+
+
