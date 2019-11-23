@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sayit/data/UnlockedLevelsDao.dart';
+import '../../api/LevelsDAO.dart';
+import '../../model/Level.dart';
 
 import '../../style.dart';
 import 'DifficultySelect.dart';
@@ -10,7 +11,16 @@ class LevelSelect extends StatefulWidget {
 }
 
 class LevelSelectState extends State<LevelSelect> {
-  final unlockedLevels = UnlockedLevelsDao.getLevelList().asMap();
+  List<Level> levels = List<Level>();
+
+  @override
+  void initState() {
+    LevelsDAO.getLevelsListAsync().then((data) =>
+        setState(() {
+          levels = data;
+        }));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +29,7 @@ class LevelSelectState extends State<LevelSelect> {
         title: Text('Choisis un niveau'),
       ),
       body: GridView.builder(
-        itemCount: unlockedLevels.length,
+        itemCount: levels.length,
         gridDelegate:
             new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
         itemBuilder: (BuildContext context, int index) {
@@ -27,11 +37,11 @@ class LevelSelectState extends State<LevelSelect> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DifficultySelect(selectedLevel: unlockedLevels[index])),
+                      MaterialPageRoute(builder: (context) => DifficultySelect(selectedLevel: levels[index])),
                     );
                   },
                   child: Text(
-                      'Niveau ${unlockedLevels[index].levelNumber}',
+                      'Niveau ${levels[index].levelNumber}',
                       style: Body1Style
                   ),
           );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sayit/style.dart';
+import 'package:sayit/widgets/PlayerWidget.dart';
 import 'package:sayit/widgets/adventure/LevelSelect.dart';
 
 class Home extends StatelessWidget {
@@ -34,8 +35,18 @@ class Home extends StatelessWidget {
             ),
             Container(
               padding: const EdgeInsets.all(8),
-              child: const Text('Mode personnalisé'),
-              color: Colors.teal[200],
+              child: RaisedButton(
+                  onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PlayerWidget()),
+                  );
+                  },
+                  child: Text(
+                      'Audio player test',
+                      style: Body1Style
+                  ),
+                )
             ),
           ],
         ),

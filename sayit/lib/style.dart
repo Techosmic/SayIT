@@ -7,5 +7,5 @@ const String FontNameDefault = 'Montserrat';
 const Body1Style = TextStyle(
   fontFamily: FontNameDefault,
   fontSize: 26.0,
-  color: Colors.purple,
+  color: Colors.black,
 );
