@@ -30,7 +30,7 @@ namespace TextToSpeech
         public static async Task<string> GetSpeechFromText(string text)
         {
             HttpContent httpContent = new StringContent("{\"input\": {\"text\":\"" + text + "\"},\"voice\": {\"languageCode\":\"en-US\",\"name\":\"en-US-Wavenet-A\"},\"audioConfig\": {\"audioEncoding\":\"Mp3\"}}");
-            var response = await _httpClient.PostAsync("https://texttospeech.googleapis.com/v1beta1/text:synthesize?key=yourapikey", httpContent);
+            var response = await _httpClient.PostAsync("https://texttospeech.googleapis.com/v1beta1/text:synthesize?key=AIzaSyBCWZRUd_taeiigsKcTdLRnboPtsq2qnKs", httpContent);
             var resultString = await response.Content.ReadAsStringAsync();
             dynamic result = JsonConvert.DeserializeObject(resultString);
             return (string)result["audioContent"];
