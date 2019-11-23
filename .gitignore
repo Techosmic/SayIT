@@ -332,3 +332,8 @@ gradle-app.setting
 # End of https://www.gitignore.io/api/gradle
 
 # End of https://www.gitignore.io/api/dart,macos,flutter,windows,android,intellij
+/API/SayIT_API/.vs/SayIT_API
+/API/SayIT_API/SayIT_API/obj
+/API/SayIT_API/SayIT_API/Properties/PublishProfiles
+/API/SayIT_API/SayIT_API/Properties
+/API/SayIT_API
