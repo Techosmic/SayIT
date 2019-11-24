@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'SayIT',
       theme: ThemeData(
-        primaryColor: Colors.teal,
+        primaryColor: Color(0xff005C3E),
         scaffoldBackgroundColor: Colors.teal[100],
 
         textTheme: TextTheme(body1: Body1Style)
