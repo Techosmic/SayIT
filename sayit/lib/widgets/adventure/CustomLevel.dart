@@ -13,6 +13,7 @@ class CustomLevel extends StatefulWidget {
 class CustomLevelState extends State <CustomLevel> {
   Level level = Level (words: List<String>());
   TextEditingController textController = new TextEditingController();
+  String notif = "";
 
   @override
   void initState() {
@@ -35,16 +36,25 @@ class CustomLevelState extends State <CustomLevel> {
               children: < Widget > [
                 TextField(
                   decoration: InputDecoration(
+                    hintText: 'Ajoute tes mots ici'
                   ),
                   controller: textController,
                 ),
-                RaisedButton(
+                Text(
+                  '$notif',
+                  style : TextStyle(color: darkColor)
+                ),
+                FlatButton(
+                  color: mediumColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(18.0),
                     side: BorderSide(color: Colors.teal, width: 2),
                   ),
                   onPressed: () {
                     level.words.add(textController.text);
+                    setState(() {
+                      notif = '\"${textController.text}\" a été ajouté à ta liste personnelle';
+                    });
                     textController.text = "";
                   },
                   child: Text(
@@ -52,10 +62,10 @@ class CustomLevelState extends State <CustomLevel> {
                     style: Body1Style
                   ),
                 ),
-                RaisedButton(
+                FlatButton(
+                  color: mediumColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.teal, width: 2),
                   ),
                    onPressed: () {
                     Navigator.push(
@@ -64,7 +74,7 @@ class CustomLevelState extends State <CustomLevel> {
                     );
                   },
                   child: Text(
-                    'Difficulté',
+                    'Choisir la difficulté',
                     style: Body1Style
                   ),
                 ),

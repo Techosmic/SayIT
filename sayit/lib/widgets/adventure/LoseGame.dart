@@ -45,34 +45,36 @@ class LoseGameState extends State<LoseGame> {
         title: Text('Mode aventure'),
         ),
         body: Stack(children: <Widget>[
-          Image.asset('lib/assets/screens/win.png', fit: BoxFit.fill),
+          Image.asset('lib/assets/screens/lose.png', fit: BoxFit.fill),
           Padding(
             child: 
             Column(
               children: [
-                Text('Tu as ajouté un mauvais ingrédient,\ntu as encore du temps avant la fin\n du cours, tu veux recommencer?',style: TextStyle(color: Colors.white,fontSize: 30),),
+                Text('Tu as ajouté un mauvais ingrédient,\ntu as encore du temps avant la fin\ndu cours, veux-tu recommencer?',style: TextStyle(color: Colors.white,fontSize: 20),),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                   child: 
-                  RaisedButton(
+                  FlatButton(
+                    color: lightColor,
                   onPressed:() {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => DifficultySelect(selectedLevel: levels[widget.selectedLevel.levelNumber-1] )));},
                   child:
                     Text(
-                      "Réessayer",style: Body1Style,
+                      "Réessayer",style: TextStyle(fontSize: 20, color: darkColor),
                     ),
                   ),
                 ),
-                RaisedButton(
+                FlatButton(
+                  color: lightColor,
                   onPressed:() {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Home()));},
                   child:
                     Text(
-                      "Abandonner", style: Body1Style,
+                      "Abandonner", style: TextStyle(fontSize: 20, color: darkColor),
                     ),
                   ),
               ],
