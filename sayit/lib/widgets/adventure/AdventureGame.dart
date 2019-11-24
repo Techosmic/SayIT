@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sayit/api/LevelsDAO.dart';
 import 'package:sayit/api/SpeechDAO.dart';
 import 'package:sayit/model/Level.dart';
+import 'package:sayit/widgets/adventure/WinGame.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 import 'package:flutter_radio/flutter_radio.dart';
 
 import 'DifficultySelect.dart';
+import 'LoseGame.dart';
 
 const languages =
   const [
@@ -41,7 +43,6 @@ class AdventureGameState extends State < AdventureGame > {
   bool _isListening = false;
   SpeechRecognition _speech;
   String transcription = '';
-  String winorlose = "";
   String _currentLocale = 'en_US';
   Language selectedLang = languages[1];
   List < Level > levels;
@@ -49,11 +50,19 @@ class AdventureGameState extends State < AdventureGame > {
     if (essaisRestant > 0) {
       start();
       essaisRestant--;
-      if (essaisRestant == 0) {
-        winorlose = "You lose!";
+      if(essaisRestant < 0){
+        stop();
+        Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoseGame(selectedLevel: levels[widget.selectedLevel.levelNumber]))
+      );
       }
     } else {
-      winorlose = "You lose!";
+      stop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoseGame(selectedLevel: levels[widget.selectedLevel.levelNumber]))
+      );
     }
   }
 
@@ -96,12 +105,16 @@ class AdventureGameState extends State < AdventureGame > {
   void onCompleteRecognition() {
     _isListening = false;
     var word = widget.selectedLevel.words[score];
-    if (transcription.contains(word)) {
+    if(transcription.contains(word)) {
+      essaisRestant = 5;
       score++;
     }
     if (score >= widget.selectedLevel.words.length) {
       score = 0;
-      winorlose = "You win!";
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => WinGame(selectedLevel: levels[widget.selectedLevel.levelNumber]))
+      );
     }
   }
   void errorHandler() => activateSpeechRecognizer();
@@ -125,6 +138,7 @@ class AdventureGameState extends State < AdventureGame > {
   }
   void playSound(String url) {
     try {
+      FlutterRadio.stop();
       FlutterRadio.play(url: url);
     } catch (e) {}
   }
@@ -132,38 +146,43 @@ class AdventureGameState extends State < AdventureGame > {
   Widget build(BuildContext context) {
     activateSpeechRecognizer();
     maxScore = widget.selectedLevel.words.length;
+    var word = widget.selectedLevel.words[score];
     return Scaffold(
       appBar: AppBar(
         title: Text('Mode aventure'),
-      ),
-      body: Stack(children: < Widget > [
-        Image.asset('lib/assets/screens/game.png', fit: BoxFit.fill),
-        Center(
-          child: Column(
-            children: [
-              Text('Essais restants: $essaisRestant     Score: $score/$maxScore'),
-              Text(widget.selectedLevel.words[score]),
-              RaisedButton(
-                onPressed: () {
-                  _isListening ?
-                    null : winorlose.contains("win") ?
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DifficultySelect(selectedLevel: levels[widget.selectedLevel.levelNumber]))) :
-                    captureSpeech();
-                },
-                color: _isListening ? Color.fromRGBO(255, 0, 0, 100) : winorlose.contains("win") ? Color.fromRGBO(0, 255, 0, 100) : null,
-                child: Text(winorlose.contains("win") ? "Aller au niveau suivant" : "enregistre ta prononciation"),
-              ),
-              Text("$winorlose"),
-              FlatButton(
-                child: Icon(Icons.play_circle_filled),
-                onPressed: () async =>playSound(await getAudio(widget.selectedLevel.words[score])),
-              )
-            ],
-          )
         ),
-      ], )
-    );
+        body: Stack(children: <Widget>[
+          Image.asset('lib/assets/screens/game.png', fit: BoxFit.fill),
+          Center(
+          child: Padding(child: 
+            Column(
+              children: [
+                Text('Essais restants: $essaisRestant                             Score: $score/$maxScore',style: TextStyle(color: Colors.white),),
+                Text(widget.selectedLevel.words[score], style: TextStyle(fontSize: 90,color: Colors.white),),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 180, 0, 0),
+                  child: 
+                  FlatButton(
+                  onPressed:() {captureSpeech();},
+                  child:
+                    Icon(
+                      Icons.mic,                  
+                      size: 80.0,
+                      color: _isListening ? Color.fromRGBO(255, 0, 0, 100) :  null,
+                      semanticLabel: 'Text to announce in accessibility modes',
+                    ),
+                  ),
+                ),
+                  FlatButton(
+                  child: Icon(Icons.play_circle_filled),
+                  onPressed: () async => playSound(await getAudio(word)),
+                  ),
+              ],
+            )
+          ,
+          padding: const EdgeInsets.fromLTRB(0, 400, 0, 0),),
+          ),
+        ],)
+      );
   }
 }
