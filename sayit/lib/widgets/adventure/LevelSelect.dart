@@ -25,6 +25,7 @@ class LevelSelectState extends State < LevelSelect > {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff005C3E),
       appBar: AppBar(
         title: Text('Choisis un niveau'),
       ),

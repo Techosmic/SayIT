@@ -12,7 +12,7 @@ class Home extends StatelessWidget {
       ),
       body: Stack(
         children: < Widget > [
-          Image.asset('lib/assets/screens/mode.png'),
+          Image.asset('lib/assets/screens/mode.png', fit: BoxFit.fill,),          
           Center(
             child: GridView.count(
               crossAxisCount: 1,
