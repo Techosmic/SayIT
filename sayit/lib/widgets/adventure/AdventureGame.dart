@@ -40,7 +40,6 @@ class AdventureGameState extends State<AdventureGame> {
   bool _isListening = false;
   SpeechRecognition _speech;
   String transcription = '';
-  String winorlose = "";
   String _currentLocale = 'en_US';
   Language selectedLang = languages[1];
   List<Level> levels;
@@ -49,14 +48,14 @@ class AdventureGameState extends State<AdventureGame> {
       start();
       essaisRestant--;
       if(essaisRestant < 0){
-        winorlose = "You lose!";
+        stop();
         Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LoseGame(selectedLevel: levels[widget.selectedLevel.levelNumber]))
       );
       }
     } else {
-      winorlose = "You lose!";
+      stop();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LoseGame(selectedLevel: levels[widget.selectedLevel.levelNumber]))
@@ -113,7 +112,6 @@ class AdventureGameState extends State<AdventureGame> {
         context,
         MaterialPageRoute(builder: (context) => WinGame(selectedLevel: levels[widget.selectedLevel.levelNumber]))
       );
-      winorlose = "You win!";
     }
   }
   void errorHandler() => activateSpeechRecognizer();
