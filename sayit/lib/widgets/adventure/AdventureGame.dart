@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sayit/api/LevelsDAO.dart';
 import 'package:sayit/api/SpeechDAO.dart';
 import 'package:sayit/model/Level.dart';
+import 'package:sayit/widgets/adventure/WinGame.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 import 'package:flutter_radio/flutter_radio.dart';
 
 import 'DifficultySelect.dart';
+import 'LoseGame.dart';
 
 const languages = const [
   const Language('Francais', 'fr_FR'),
@@ -48,9 +50,17 @@ class AdventureGameState extends State<AdventureGame> {
       essaisRestant--;
       if(essaisRestant < 0){
         winorlose = "You lose!";
+        Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoseGame(selectedLevel: levels[widget.selectedLevel.levelNumber]))
+      );
       }
     } else {
       winorlose = "You lose!";
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoseGame(selectedLevel: levels[widget.selectedLevel.levelNumber]))
+      );
     }
   }
 
@@ -94,10 +104,15 @@ class AdventureGameState extends State<AdventureGame> {
     _isListening = false;
     var word = widget.selectedLevel.words[score];
     if(transcription.contains(word)) {
+      essaisRestant = 5;
       score++;
     }
     if(score >= widget.selectedLevel.words.length) {
       score = 0;
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => WinGame(selectedLevel: levels[widget.selectedLevel.levelNumber]))
+      );
       winorlose = "You win!";
     }
   }
@@ -148,23 +163,16 @@ class AdventureGameState extends State<AdventureGame> {
                   padding: const EdgeInsets.fromLTRB(0, 180, 0, 0),
                   child: 
                   FlatButton(
-                  onPressed:() {_isListening ? 
-                  null : winorlose.contains("win") ? 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DifficultySelect(selectedLevel: levels[widget.selectedLevel.levelNumber] )))
-                  : captureSpeech();},
+                  onPressed:() {captureSpeech();},
                   child:
                     Icon(
-                      winorlose.contains("win") ? Icons.chevron_right : Icons.mic,                  
+                      Icons.mic,                  
                       size: 80.0,
-                      color: _isListening ? Color.fromRGBO(255, 0, 0, 100) : winorlose.contains("win") ? Color.fromRGBO(0, 255, 0, 100) : null,
+                      color: _isListening ? Color.fromRGBO(255, 0, 0, 100) :  null,
                       semanticLabel: 'Text to announce in accessibility modes',
                     ),
                   ),
                 ),
-                Text("$winorlose",
-                style: TextStyle(color: winorlose.contains("win") ? Colors.green : Colors.red ),),
                   FlatButton(
                   child: Icon(Icons.play_circle_filled),
                   onPressed: () async => playSound(await getAudio(word)),
