@@ -134,7 +134,9 @@ class AdventureGameState extends State<AdventureGame> {
       appBar: AppBar(
         title: Text('Mode aventure'),
         ),
-        body: Center(
+        body: Stack(children: <Widget>[
+          Image.asset('lib/assets/screens/game.png', fit: BoxFit.fill),
+          Center(
           child: Column(
               children: [
                 Text('Essais restants: $essaisRestant     Score: $score/$maxScore'),
@@ -157,6 +159,7 @@ class AdventureGameState extends State<AdventureGame> {
               ],
               )
           ),
+        ],)
       );
   }
 }
