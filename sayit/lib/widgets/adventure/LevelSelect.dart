@@ -25,7 +25,7 @@ class LevelSelectState extends State < LevelSelect > {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff005C3E),
+      backgroundColor: mediumColor,
       appBar: AppBar(
         title: Text('Choisis un niveau'),
       ),
@@ -35,8 +35,9 @@ class LevelSelectState extends State < LevelSelect > {
         padding: EdgeInsets.all(25.0),
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisSpacing: 15, crossAxisSpacing: 10),
         itemBuilder: (BuildContext context, int index) {
-          return RaisedButton(
-            shape: CircleBorder(side: BorderSide(color: Colors.teal, width: 2)),
+          return FlatButton(
+            color: lightColor,
+            shape: CircleBorder(side: BorderSide(color: mediumColor, width: 2)),
             onPressed: () {
               Navigator.push(
                 context,
@@ -45,8 +46,11 @@ class LevelSelectState extends State < LevelSelect > {
             },
             child: Center(
               child: Text(
-                'Niveau ${levels[index].levelNumber}',
-                style: ButtonStyle,
+                '${levels[index].levelNumber}',
+                style: TextStyle(
+                  color: darkColor,
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold),
               ),
             )
           );

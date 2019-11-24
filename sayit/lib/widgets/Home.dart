@@ -12,49 +12,72 @@ class Home extends StatelessWidget {
       ),
       body: Stack(
         children: < Widget > [
-          Image.asset('lib/assets/screens/mode.png', fit: BoxFit.fill,),          
-          Center(
-            child: GridView.count(
-              crossAxisCount: 1,
-              mainAxisSpacing: 15,
-              childAspectRatio: 2.5,
-              crossAxisSpacing: 25,
-              padding: EdgeInsets.all(75),
-              children: < Widget > [
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LevelSelect()),
-                    );
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.teal, width: 2),
-                  ),
-                  child: Text(
-                    'Aventure',
-                    style: Body1Style
+          Image.asset('lib/assets/screens/mode.png', fit: BoxFit.fill, ),
+          Padding(
+            padding: const EdgeInsets.all(18),
+              child: Column(children: < Widget > [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15.0),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Bonjour Henry !',
+                        style: HeaderTextStyle,
+                        textAlign: TextAlign.left,
+                      )
+                    ),
+                ),
+                Text(
+                  "Bienvenue à l'Ecole des Sorciers\n\nSélectionne le mode aventure pour apprendre de nouveaux sorts et  découvrir les secrets de l'école.\n\nOu bien choisis le mode entraînement pour apprendre tes propres sorts ! ",
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 8,
+                  style: TextStyle(
+                    fontSize: 20
                   ),
                 ),
-                RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.teal, width: 2),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PlayerWidget()),
-                    );
-                  },
-                  child: Text(
-                    'Entrainement',
-                    style: Body1Style
-                  ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 160.0, right: 190),
+                    child: Column(
+                      children: < Widget > [
+                        ButtonTheme(
+                          minWidth: 1000,
+                          child: FlatButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => LevelSelect()),
+                              );
+                            },
+                            color: Color(0xff005C3E),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(18.0),
+                            ),
+                            child: Text(
+                              'AVENTURE',
+                              style: Body1Style
+                            ),
+                          ),
+                        ),
+
+                        FlatButton(color: Color(0xff005C3E),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(18.0),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => PlayerWidget()),
+                            );
+                          },
+                          child: Text(
+                            'ENTRAINEMENT',
+                            style: Body1Style
+                          ),
+                        ),
+                      ],
+                    ),
                 ),
-              ],
-            ),
+              ], ),
           )
         ],
       )
