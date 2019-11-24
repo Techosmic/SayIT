@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sayit/api/LevelsDAO.dart';
+import 'package:sayit/api/SpeechDAO.dart';
 import 'package:sayit/model/Level.dart';
 import 'package:speech_recognition/speech_recognition.dart';
+import 'package:flutter_radio/flutter_radio.dart';
 
 import 'DifficultySelect.dart';
 
@@ -100,11 +102,29 @@ class AdventureGameState extends State<AdventureGame> {
     }
   }
   void errorHandler() => activateSpeechRecognizer();
+    Future<void> audioStart() async {
+    await FlutterRadio.audioStart();
+    print('Audio Start OK');
+  }
   void initState() {
     getLevels();
+    audioStart();
   }
   void getLevels() async {
     levels = await LevelsDAO.getLevelsListAsync();
+  }
+  Future<String> getAudio(String text) async {
+    try {
+      return await SpeechDAO.fetchAudioUrlAsync(text);
+    } catch (e) {
+      return "";
+    }
+  }
+  void playSound(String url) {
+    try {
+      FlutterRadio.play(url: url);
+    } catch (e) {
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -130,6 +150,10 @@ class AdventureGameState extends State<AdventureGame> {
                   child: Text(winorlose.contains("win")? "Aller au niveau suivant" :"enregistre ta prononciation"),
                 ),
                 Text("$winorlose"),
+                FlatButton(
+                child: Icon(Icons.play_circle_filled),
+                onPressed: () async => playSound(await getAudio(widget.selectedLevel.words[score])),
+              )
               ],
               )
           ),
