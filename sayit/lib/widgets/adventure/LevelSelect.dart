@@ -1,0 +1,57 @@
+import 'package:flutter/material.dart';
+import '../../api/LevelsDAO.dart';
+import '../../model/Level.dart';
+
+import '../../style.dart';
+import 'DifficultySelect.dart';
+
+class LevelSelect extends StatefulWidget {
+  @override
+  LevelSelectState createState() => LevelSelectState();
+}
+
+class LevelSelectState extends State < LevelSelect > {
+  List < Level > levels = List < Level > ();
+
+  @override
+  void initState() {
+    LevelsDAO.getLevelsListAsync().then((data) =>
+      setState(() {
+        levels = data;
+      }));
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xff005C3E),
+      appBar: AppBar(
+        title: Text('Choisis un niveau'),
+      ),
+      body: GridView.builder(
+        itemCount: levels.length,
+
+        padding: EdgeInsets.all(25.0),
+        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, mainAxisSpacing: 15, crossAxisSpacing: 10),
+        itemBuilder: (BuildContext context, int index) {
+          return RaisedButton(
+            shape: CircleBorder(side: BorderSide(color: Colors.teal, width: 2)),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DifficultySelect(selectedLevel: levels[index])),
+              );
+            },
+            child: Center(
+              child: Text(
+                'Niveau ${levels[index].levelNumber}',
+                style: ButtonStyle,
+              ),
+            )
+          );
+        },
+      )
+    );
+  }
+}
