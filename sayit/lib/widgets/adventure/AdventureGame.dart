@@ -122,6 +122,7 @@ class AdventureGameState extends State<AdventureGame> {
   }
   void playSound(String url) {
     try {
+      FlutterRadio.stop();
       FlutterRadio.play(url: url);
     } catch (e) {
     }
@@ -130,6 +131,7 @@ class AdventureGameState extends State<AdventureGame> {
   Widget build(BuildContext context) {
     activateSpeechRecognizer();
     maxScore = widget.selectedLevel.words.length;
+    var word = widget.selectedLevel.words[score];
     return Scaffold(
       appBar: AppBar(
         title: Text('Mode aventure'),
@@ -152,7 +154,7 @@ class AdventureGameState extends State<AdventureGame> {
                 Text("$winorlose"),
                 FlatButton(
                 child: Icon(Icons.play_circle_filled),
-                onPressed: () async => playSound(await getAudio(widget.selectedLevel.words[score])),
+                onPressed: () async => playSound(await getAudio(word)),
               )
               ],
               )

@@ -13,7 +13,7 @@ namespace TextToSpeech
 {
     public static class FunctionGCP
     {
-        private static readonly HttpClient _httpClient = new HttpClient();
+        private static HttpClient _httpClient = new HttpClient();
         private static ILogger logger;
         [FunctionName("FunctionGCP")]
         public static async Task<IActionResult> Run(
@@ -40,6 +40,7 @@ namespace TextToSpeech
 
         public static async Task<string> StorageAudio(string audio, string title)
         {
+            
             title = title.Replace(" ", "");
             byte[] binaryData = Convert.FromBase64String(audio);
             HttpContent httpContent = new ByteArrayContent(binaryData);
@@ -47,10 +48,11 @@ namespace TextToSpeech
             //_httpClient.DefaultRequestHeaders.Add("Content-Type", "MP3");
             _httpClient.DefaultRequestHeaders.Add("x-ms-date", DateTime.UtcNow.ToString("U"));
             var url = "https://sayitaudio.blob.core.windows.net/audio/" + title +
-                      ".mp3?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-11-24T00:06:10Z&st=2019-11-23T16:06:10Z&sip=1.1.1.1-255.255.255.255&spr=https&sig=S%2FxQzYZfOFF8iWffiYNvPFepgCt0QGURGC2DPoSVmxA%3D";
+                      ".mp3?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-12-31T08:09:37Z&st=2019-11-24T00:09:37Z&sip=1.1.1.1-255.255.255.255&spr=https&sig=ME3%2Bza72l%2B0eSP64WNKuHBwuaV1GJOnihZmuQnELyp8%3D";
             var response = await _httpClient.PutAsync(url, httpContent);
             var resultString = await response.Content.ReadAsStringAsync();
             logger.LogInformation(resultString);
+            _httpClient = new HttpClient();
             return url;
         }
     }
