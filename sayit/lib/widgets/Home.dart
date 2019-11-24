@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sayit/style.dart';
-import 'package:sayit/widgets/PlayerWidget.dart';
 import 'package:sayit/widgets/adventure/LevelSelect.dart';
+import 'package:sayit/widgets/adventure/CustomLevel.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -45,7 +45,7 @@ class Home extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PlayerWidget()),
+                      MaterialPageRoute(builder: (context) => CustomLevel()),
                     );
                   },
                   child: Text(

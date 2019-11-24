@@ -1,41 +1,75 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sayit/data/UnlockedLevelsDao.dart';
+import 'package:sayit/model/Level.dart';
 
-import 'DifficultySelect.dart';
 import '../../style.dart';
+import 'DifficultySelect.dart';
 
-class LevelSelect extends StatefulWidget {
+class CustomLevel extends StatefulWidget {
   @override
-  LevelSelectState createState() => LevelSelectState();
+  CustomLevelState createState() => CustomLevelState();
 }
 
-class LevelSelectState extends State<LevelSelect> {
-  final unlockedLevels = UnlockedLevelsDao.getLevelList().asMap();
+class CustomLevelState extends State <CustomLevel> {
+  Level level = Level (words: List<String>());
+  TextEditingController textController = new TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffB3E4D4),
       appBar: AppBar(
-        title: Text('Choisis un niveau'),
+        title: Text('Entraînement'),
       ),
-      body: GridView.builder(
-        itemCount: unlockedLevels.length,
-        gridDelegate:
-            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-        itemBuilder: (BuildContext context, int index) {
-          return RaisedButton(
+      body: Center(
+        child: GridView.count(crossAxisCount: 1,
+              mainAxisSpacing: 15,
+              childAspectRatio: 2.5,
+              crossAxisSpacing: 25,
+              padding: EdgeInsets.all(75),
+              children: < Widget > [
+                TextField(
+                  decoration: InputDecoration(
+                  ),
+                  controller: textController,
+                ),
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.teal, width: 2),
+                  ),
                   onPressed: () {
+                    level.words.add(textController.text);
+                    textController.text = "";
+                  },
+                  child: Text(
+                    'Ajouter un mot',
+                    style: Body1Style
+                  ),
+                ),
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.teal, width: 2),
+                  ),
+                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DifficultySelect(selectedLevel: unlockedLevels[index])),
+                      MaterialPageRoute(builder: (context) => DifficultySelect(selectedLevel: level)),
                     );
                   },
                   child: Text(
-                      'Niveau ${unlockedLevels[index].levelNumber}',
-                      style: Body1Style
+                    'Difficulté',
+                    style: Body1Style
                   ),
-          );
-        },
+                ),
+              ]
+        ),
       )
     );
   }

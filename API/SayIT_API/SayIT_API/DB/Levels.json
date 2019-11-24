@@ -2,33 +2,22 @@
   {
     "levelNumber": 1,
     "words": [
-      "cat",
-      "dog"
+      "claw",
+      "toad",
+      "ventricle",
+      "eye",
+      "rose"
     ],
     "unlocked": true
   },
   {
     "levelNumber": 2,
     "words": [
-      "How",
-      "Why"
-    ],
-    "unlocked": false
-  },
-  {
-    "levelNumber": 3,
-    "words": [
-      "There",
-      "Their"
-    ],
-    "unlocked": false
-  },
-  {
-    "levelNumber": 4,
-    "words": [
-      "Through",
-      "Thought"
-    ],
-    "unlocked": false
+      "amanita",
+      "cyanide",
+      "ethanol",
+      "peony",
+      "willow"
+    ]
   }
 ]
