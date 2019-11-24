@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sayit/widgets/adventure/story.dart';
 import '../../api/LevelsDAO.dart';
 import '../../model/Level.dart';
 
@@ -41,7 +42,7 @@ class LevelSelectState extends State < LevelSelect > {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => DifficultySelect(selectedLevel: levels[index])),
+                MaterialPageRoute(builder: (context) => Story(level: levels[index])),
               );
             },
             child: Center(

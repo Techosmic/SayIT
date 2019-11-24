@@ -157,8 +157,8 @@ class AdventureGameState extends State < AdventureGame > {
           child: Padding(child:
             Column(
               children: [
-                Text('Essais restants: $essaisRestant                             Score: $score/$maxScore', style: TextStyle(color: Colors.white), ),
-                Text(widget.selectedLevel.words[score], style: TextStyle(fontSize: 90, color: Colors.white), ),
+                Text('Essais restants: $essaisRestant                             Score: $score/$maxScore', style: TextStyle(color: Colors.white), ),//Gne
+                Text(widget.selectedLevel.words[score], style: TextStyle(fontSize: 75, color: Colors.white), ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
                     child:
