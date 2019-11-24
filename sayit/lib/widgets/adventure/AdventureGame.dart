@@ -5,8 +5,6 @@ import 'package:sayit/model/Level.dart';
 import 'package:sayit/widgets/adventure/WinGame.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 import 'package:flutter_radio/flutter_radio.dart';
-
-import 'DifficultySelect.dart';
 import 'LoseGame.dart';
 
 const languages =
@@ -50,12 +48,12 @@ class AdventureGameState extends State < AdventureGame > {
     if (essaisRestant > 0) {
       start();
       essaisRestant--;
-      if(essaisRestant < 0){
+      if (essaisRestant < 0) {
         stop();
         Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => LoseGame(selectedLevel: levels[widget.selectedLevel.levelNumber]))
-      );
+          context,
+          MaterialPageRoute(builder: (context) => LoseGame(selectedLevel: levels[widget.selectedLevel.levelNumber]))
+        );
       }
     } else {
       stop();
@@ -105,7 +103,7 @@ class AdventureGameState extends State < AdventureGame > {
   void onCompleteRecognition() {
     _isListening = false;
     var word = widget.selectedLevel.words[score];
-    if(transcription.contains(word)) {
+    if (transcription.contains(word)) {
       essaisRestant = 5;
       score++;
     }
@@ -122,6 +120,8 @@ class AdventureGameState extends State < AdventureGame > {
     await FlutterRadio.audioStart();
     print('Audio Start OK');
   }
+
+  @override
   void initState() {
     getLevels();
     audioStart();
@@ -150,39 +150,40 @@ class AdventureGameState extends State < AdventureGame > {
     return Scaffold(
       appBar: AppBar(
         title: Text('Mode aventure'),
-        ),
-        body: Stack(children: <Widget>[
-          Image.asset('lib/assets/screens/game.png', fit: BoxFit.fill),
-          Center(
-          child: Padding(child: 
+      ),
+      body: Stack(children: < Widget > [
+        Image.asset('lib/assets/screens/game.png', fit: BoxFit.fill),
+        Center(
+          child: Padding(child:
             Column(
               children: [
-                Text('Essais restants: $essaisRestant                             Score: $score/$maxScore',style: TextStyle(color: Colors.white),),
-                Text(widget.selectedLevel.words[score], style: TextStyle(fontSize: 90,color: Colors.white),),
+                Text('Essais restants: $essaisRestant                             Score: $score/$maxScore', style: TextStyle(color: Colors.white), ),
+                Text(widget.selectedLevel.words[score], style: TextStyle(fontSize: 90, color: Colors.white), ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 180, 0, 0),
-                  child: 
-                  FlatButton(
-                  onPressed:() {captureSpeech();},
-                  child:
-                    Icon(
-                      Icons.mic,                  
-                      size: 80.0,
-                      color: _isListening ? Color.fromRGBO(255, 0, 0, 100) :  null,
-                      semanticLabel: 'Text to announce in accessibility modes',
+                  padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
+                    child:
+                    FlatButton(
+                      onPressed: () {
+                        captureSpeech();
+                      },
+                      child:
+                      Icon(
+                        Icons.mic,
+                        size: 80.0,
+                        color: _isListening ? Color.fromRGBO(255, 0, 0, 100) : null,
+                        semanticLabel: 'Text to announce in accessibility modes',
+                      ),
                     ),
-                  ),
                 ),
-                  FlatButton(
+                FlatButton(
                   child: Icon(Icons.play_circle_filled),
-                  onPressed: () async => playSound(await getAudio(word)),
-                  ),
+                  onPressed: () async =>playSound(await getAudio(word)),
+                ),
               ],
-            )
-          ,
-          padding: const EdgeInsets.fromLTRB(0, 400, 0, 0),),
-          ),
-        ],)
-      );
+            ),
+            padding: const EdgeInsets.fromLTRB(0, 330, 0, 0), ),
+        ),
+      ], )
+    );
   }
 }

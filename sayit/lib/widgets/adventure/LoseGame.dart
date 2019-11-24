@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sayit/api/LevelsDAO.dart';
-import 'package:sayit/api/SpeechDAO.dart';
 import 'package:sayit/model/Level.dart';
 import 'package:sayit/widgets/Home.dart';
-import 'package:speech_recognition/speech_recognition.dart';
-import 'package:flutter_radio/flutter_radio.dart';
 
 import '../../style.dart';
 import 'DifficultySelect.dart';
@@ -34,11 +31,12 @@ class LoseGame extends StatefulWidget {
 
 class LoseGameState extends State<LoseGame> {
   List<Level> levels;
-    void getLevels() async {
-    levels = await LevelsDAO.getLevelsListAsync();
-  }
+
+  @override
   void initState() {
-      getLevels();
+      LevelsDAO.getLevelsListAsync().then((result) {
+        levels = result;
+      });
   }
   @override
   Widget build(BuildContext context) {
@@ -52,7 +50,7 @@ class LoseGameState extends State<LoseGame> {
             child: 
             Column(
               children: [
-                Text('Tu as ajouté un mauvais ingédient,\ntu as encore du temps avant la fin\n du cours, tu veux recommencer?',style: TextStyle(color: Colors.white,fontSize: 30),),
+                Text('Tu as ajouté un mauvais ingrédient,\ntu as encore du temps avant la fin\n du cours, tu veux recommencer?',style: TextStyle(color: Colors.white,fontSize: 30),),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                   child: 
